@@ -23,16 +23,28 @@ namespace EmployeeMangement.Controllers
             return Ok(await mediator.Send(createEmployeeobj));
         }
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateEmployee updateemployeeobj)
+        public async Task<IActionResult> Update(UpdateEmployee updateEmployeeobj)
         {
-            return Ok(await mediator.Send(updateemployeeobj));
+            return Ok(await mediator.Send(updateEmployeeobj));
         }
         [HttpGet]
-        //public async Task<IActionResult> Get(List<GetEmployeeById>,GetEmployeeByIdobj)
-        //{
-        //    return Ok(await mediator.Send(GetEmployeeByIdobj));
-        //}
+        public async Task<IActionResult> Getall()
+        {
+            return Ok(await mediator.Send( new GetEmployee()));
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult>GetById(int id)
+        {
+            return Ok(await mediator.Send(new GetEmployeebyId{ Id = id }));
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return Ok(await mediator.Send(new DeleteEmployee { Id = id }));
+        }
 
 
     }
+    
 }
+
