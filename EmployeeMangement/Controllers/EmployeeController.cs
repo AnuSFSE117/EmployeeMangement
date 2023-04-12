@@ -1,5 +1,8 @@
-﻿using EmployeeMangement.command;
-using EmployeeMangement.Query;
+﻿using EmployeeMangement.Modules.EmployeeManagement.command.create;
+using EmployeeMangement.Modules.EmployeeManagement.command.Delete;
+using EmployeeMangement.Modules.EmployeeManagement.command.Update;
+using EmployeeMangement.Modules.EmployeeManagement.Query;
+using EmployeeMangement.Modules.EmployeeManagement.Query.Get;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +26,7 @@ namespace EmployeeMangement.Controllers
             return Ok(await mediator.Send(createEmployeeobj));
         }
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateEmployee updateEmployeeobj)
+        public async Task<IActionResult> Update(updateEmployee updateEmployeeobj)
         {
             return Ok(await mediator.Send(updateEmployeeobj));
         }

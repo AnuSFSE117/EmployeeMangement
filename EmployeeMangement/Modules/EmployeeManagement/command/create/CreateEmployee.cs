@@ -2,9 +2,9 @@
 using MediatR;
 using System.Reflection.Metadata.Ecma335;
 
-namespace EmployeeMangement.command
+namespace EmployeeMangement.Modules.EmployeeManagement.command.create
 {
-    public class CreateEmployee : IRequest <int>
+    public class CreateEmployee : IRequest<string>
     {
         public string Name { get; set; }
         public long Phonenumber { get; set; }
@@ -12,16 +12,18 @@ namespace EmployeeMangement.command
         public string City { get; set; }
         public int Pincode { get; set; }
         public int Salary { get; set; }
-
-
-        public class CreateEmployeeHandler : IRequestHandler<CreateEmployee, int>
+    }
+    public class CreateEmployeeHandler : IRequestHandler<CreateEmployee, string>
+    {
+        private readonly EmployeeDbcontext EmployeeDbcontextobj;
+        public CreateEmployeeHandler(EmployeeDbcontext obj)
         {
-            private readonly EmployeeDbcontext EmployeeDbcontextobj;
-            public CreateEmployeeHandler(EmployeeDbcontext obj)
-            {
-                EmployeeDbcontextobj = obj;
-            }
-            public async Task<int> Handle(CreateEmployee obj1,CancellationToken cancellationToken)
+            EmployeeDbcontextobj = obj;
+        }
+
+        public async Task<string> Handle(CreateEmployee obj1, CancellationToken cancellationToken)
+        {
+            try
             {
                 var Emp = new EmployeeModel();
                 Emp.Name = obj1.Name;
@@ -32,12 +34,16 @@ namespace EmployeeMangement.command
                 Emp.Salary = obj1.Salary;
                 EmployeeDbcontextobj.Employeetable.Add(Emp);
                 await EmployeeDbcontextobj.SaveChangesAsync();
-                return Emp.Id;
-            }   
-            
-
+                return "success";
+                
+            }
+            catch (Exception ex)
+            {
+               return "Invalid";
+            }
         }
-
     
+
     }
 }
+
