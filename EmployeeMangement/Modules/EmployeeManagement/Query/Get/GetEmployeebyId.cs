@@ -2,31 +2,33 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace EmployeeMangement.Modules.EmployeeManagement.Query.Get
 {
-    public class GetEmployeebyId : IRequest<string>
+    public class GetEmployeebyId : IRequest<EmployeeModel>
     {
         public int Id { get; set; }
-        public class GetEmployeeHandler : IRequestHandler<GetEmployeebyId, string>
+        public class GetEmployeeHandler : IRequestHandler <GetEmployeebyId, EmployeeModel>
         {
             private readonly EmployeeDbcontext employeeDbcontextobj;
+            ResponseModel responseModel=new ResponseModel();
             public GetEmployeeHandler(EmployeeDbcontext obj)
             {
                 employeeDbcontextobj = obj;
             }
-            public async Task<string> Handle(GetEmployeebyId request, CancellationToken cancellationToken)
+            public async Task<EmployeeModel> Handle(GetEmployeebyId request, CancellationToken cancellationToken)
             {
+
                 var result = await employeeDbcontextobj.Employeetable.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
                 if (result != null)
                 {
-                    return "success";
+                    return result;
                 }
-                else
+                else 
                 {
-                   throw new Exception("Invalid id");
+                    throw new Exception("Invalid id");
                 }
-
             }
 
         }

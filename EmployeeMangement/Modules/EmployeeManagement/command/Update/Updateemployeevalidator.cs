@@ -1,5 +1,4 @@
-﻿
-using EmployeeMangement.Validators;
+﻿using EmployeeMangement.Validators;
 using FluentValidation;
 using FluentValidation.Validators;
 using System.Text.RegularExpressions;
@@ -11,26 +10,26 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
         public Updateemployeevalidator()
         {
             RuleFor(x => x.Name).Cascade(CascadeMode.StopOnFirstFailure).NotEmpty()
-                .WithMessage("{PropertyName} should be not empty")
-                 .Length(3, 25).WithMessage("{PropertyName} should  be 3 and 25 characters")
-                 .Must(IsValidName).WithMessage("{PropertyName} should all be Letters");
+                .WithMessage("{PropertyName} should not be empty")
+                 .Length(3, 25).WithMessage("{PropertyName} should  between 3 and 25 characters")
+                 .Must(IsValidName).WithMessage("Invalid{PropertyName}");
 
             RuleFor(x => x.Phonenumber).Cascade(CascadeMode.StopOnFirstFailure).NotEmpty()
-                .WithMessage("{PropertyName} should be not empty")
+                .WithMessage("{PropertyName} should not be empty")
                 .SetValidator(new PhonenumberValidation()).WithMessage("Invalid PhoneNumber");
 
 
-            RuleFor(x => x.Email).NotEmpty().NotNull().WithMessage("Email address is required")
-                .EmailAddress().WithMessage("Your email address is not valid")
+            RuleFor(x => x.Email).NotEmpty().NotNull().WithMessage("{PropertyName} should not be empty")
+                .EmailAddress().WithMessage("Invalid Mailid")
                 .SetValidator(new Validators.EmailValidator());
 
-            RuleFor(x => x.City).NotEmpty().WithMessage("City is required")
-                .Must(IsValidName);
+            RuleFor(x => x.City).NotEmpty().WithMessage("{PropertyName} should not be empty")
+                .SetValidator(new Cityvalidation());
 
-            RuleFor(x => x.Pincode).NotEmpty().WithMessage("Pincode is required")
-                .GreaterThanOrEqualTo(500000);
+            RuleFor(x => x.Pincode).NotEmpty().WithMessage("{PropertyName} should not be empty")
+                .SetValidator(new PincodeValidation());
 
-            RuleFor(x => x.Salary).NotNull().WithMessage("Salary cannot be Null");
+            RuleFor(x => x.Salary).NotNull().WithMessage("{PropertyName} should not be Null");
 
         }
         private bool IsValidName(string name)

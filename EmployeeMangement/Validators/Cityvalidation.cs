@@ -3,20 +3,25 @@ using System.Text.RegularExpressions;
 
 namespace EmployeeMangement.Validators
 {
-    public class PhonenumberValidation : PropertyValidator
+    public class Cityvalidation : PropertyValidator
     {
-        public PhonenumberValidation() : base("Invalid PhoneNumber")
+        public Cityvalidation() : base("Invalid City")
         {
 
         }
+
+
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            Regex regex = new Regex("[0-9]{10}");
+            Regex regex = new Regex(@"^[a-z\s]+$",RegexOptions.IgnoreCase);
             Match match = regex.Match(context.PropertyValue.ToString());
             if (match.Success)
                 return true;
             else
                 return false;
         }
-    }    
+
+    }
+
 }
+

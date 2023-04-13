@@ -4,7 +4,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace EmployeeMangement.Modules.EmployeeManagement.command.create
 {
-    public class CreateEmployee : IRequest<string>
+    public class CreateEmployee : IRequest<ResponseModel>
     {
         public string Name { get; set; }
         public long Phonenumber { get; set; }
@@ -13,7 +13,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
         public int Pincode { get; set; }
         public int Salary { get; set; }
     }
-    public class CreateEmployeeHandler : IRequestHandler<CreateEmployee, string>
+    public class CreateEmployeeHandler : IRequestHandler<CreateEmployee, ResponseModel>
     {
         private readonly EmployeeDbcontext EmployeeDbcontextobj;
         public CreateEmployeeHandler(EmployeeDbcontext obj)
@@ -21,8 +21,9 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
             EmployeeDbcontextobj = obj;
         }
 
-        public async Task<string> Handle(CreateEmployee obj1, CancellationToken cancellationToken)
+        public async Task<ResponseModel> Handle(CreateEmployee obj1, CancellationToken cancellationToken)
         {
+            ResponseModel responseModel = new ResponseModel();
             try
             {
                 var Emp = new EmployeeModel();
@@ -34,16 +35,15 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
                 Emp.Salary = obj1.Salary;
                 EmployeeDbcontextobj.Employeetable.Add(Emp);
                 await EmployeeDbcontextobj.SaveChangesAsync();
-                return "success";
-                
+                int result = responseModel.Id = Emp.Id;
+                responseModel.info = "Employee details added Successfully";
+                return responseModel ;
             }
-            catch (Exception ex)
-            {
-               return "Invalid";
+            catch (Exception e){
+                responseModel.info = "invalid data";
             }
+            return responseModel ;
         }
-    
-
     }
 }
 

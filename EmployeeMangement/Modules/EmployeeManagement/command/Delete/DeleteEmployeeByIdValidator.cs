@@ -8,7 +8,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Delete
         public DeleteEmployeeByIdValidator()
         {
 
-            RuleFor(x => x.Id).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty().NotNull().InclusiveBetween(1,100);
 
         }
     }

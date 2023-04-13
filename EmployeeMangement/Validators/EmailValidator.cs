@@ -6,7 +6,7 @@ namespace EmployeeMangement.Validators
     public class EmailValidator : PropertyValidator
     {
 
-        public EmailValidator() : base("Please enter Correct MailId")
+        public EmailValidator() : base("Invalid MailId")
         {
 
         }

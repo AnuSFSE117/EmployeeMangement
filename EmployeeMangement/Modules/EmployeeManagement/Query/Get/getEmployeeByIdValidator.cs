@@ -6,7 +6,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.Query.Get
     {
         public getEmployeeByIdValidator()
         {
-            RuleFor(x => x.Id).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty().NotNull().InclusiveBetween(1,100);
 
         }
 

@@ -1,7 +1,7 @@
 ﻿using EmployeeMangement.Models;
 using MediatR;
 
-namespace EmployeeMangement.Modules.EmployeeManagement.Query
+namespace EmployeeMangement.Modules.EmployeeManagement.Query.Get
 {
     public class GetEmployee : IRequest<List<EmployeeModel>>
     {
