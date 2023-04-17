@@ -6,6 +6,7 @@ using Serilog;
 using System.Reflection;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using EmployeeMangement.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,7 +41,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.AddExceptionErrorHandler();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

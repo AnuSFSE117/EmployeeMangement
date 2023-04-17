@@ -1,4 +1,5 @@
 ﻿using FluentValidation.Validators;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Text.RegularExpressions;
 
 namespace EmployeeMangement.Validators
@@ -26,6 +27,8 @@ namespace EmployeeMangement.Validators
 
 
         }
+       
+
     }
 
 }

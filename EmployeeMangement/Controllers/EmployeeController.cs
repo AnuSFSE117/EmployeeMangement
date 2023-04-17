@@ -4,6 +4,7 @@ using EmployeeMangement.Modules.EmployeeManagement.command.Delete;
 using EmployeeMangement.Modules.EmployeeManagement.command.Update;
 using EmployeeMangement.Modules.EmployeeManagement.Query;
 using EmployeeMangement.Modules.EmployeeManagement.Query.Get;
+using EmployeeMangement.Modules.EmployeeManagement.Query.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

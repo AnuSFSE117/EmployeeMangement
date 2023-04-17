@@ -1,18 +1,20 @@
-﻿using EmployeeMangement.Models;
+﻿using EmployeeMangement.Exception_Handling;
+using EmployeeMangement.Exceptions;
+using EmployeeMangement.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 
-namespace EmployeeMangement.Modules.EmployeeManagement.Query.Get
+namespace EmployeeMangement.Modules.EmployeeManagement.Query.GetById
 {
     public class GetEmployeebyId : IRequest<EmployeeModel>
     {
         public int Id { get; set; }
-        public class GetEmployeeHandler : IRequestHandler <GetEmployeebyId, EmployeeModel>
+        public class GetEmployeeHandler : IRequestHandler<GetEmployeebyId, EmployeeModel>
         {
             private readonly EmployeeDbcontext employeeDbcontextobj;
-            ResponseModel responseModel=new ResponseModel();
+            ResponseModel responseModel = new ResponseModel();
             public GetEmployeeHandler(EmployeeDbcontext obj)
             {
                 employeeDbcontextobj = obj;
@@ -21,17 +23,25 @@ namespace EmployeeMangement.Modules.EmployeeManagement.Query.Get
             {
 
                 var result = await employeeDbcontextobj.Employeetable.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
+
                 if (result != null)
                 {
                     return result;
                 }
-                else 
+
+
+                else
                 {
-                    throw new Exception("Invalid id");
+                    throw new IdNotFoundException();
+
                 }
+
             }
 
         }
 
     }
+
 }
+
+

@@ -1,4 +1,6 @@
-﻿using EmployeeMangement.Models;
+﻿using EmployeeMangement.Exception_Handling;
+using EmployeeMangement.Exceptions;
+using EmployeeMangement.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +31,11 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
             ResponseModel responseModel = new ResponseModel();
             try
             {
+                var ismailexists = _db.Employeetable.Where(em => em.Email == obj1.Email).ToList();
+                if (ismailexists.Count > 0)
+                {
+                    throw new Exception();
+                }
                 if (Emp != null)
                 {
                     Emp.Name = obj1.Name;
@@ -40,7 +47,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
                     _db.Employeetable.Update(Emp);
                     await _db.SaveChangesAsync();
                     int result = responseModel.Id = Emp.Id;
-                    responseModel.info = "Employee details updated Successfully";
+                    responseModel.Additionalinfo = "Employee details updated Successfully";
                     return responseModel;
 
                 }
@@ -49,9 +56,10 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
 
             catch (Exception e)
             {
-                responseModel.info = "invalid data";
+                responseModel.Additionalinfo = "invalid data";
+               
             }
-            return responseModel;
+             throw new EmailException();
 
         }
     }

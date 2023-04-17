@@ -8,6 +8,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.Query.Get
         public class GetEmployeeHandler : IRequestHandler<GetEmployee, List<EmployeeModel>>
         {
             private readonly EmployeeDbcontext EmployeeDbcontextobj;
+            
             public GetEmployeeHandler(EmployeeDbcontext obj)
             {
                 EmployeeDbcontextobj = obj;

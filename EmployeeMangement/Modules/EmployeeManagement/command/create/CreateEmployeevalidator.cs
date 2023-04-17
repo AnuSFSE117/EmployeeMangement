@@ -1,4 +1,5 @@
-﻿using EmployeeMangement.Validators;
+﻿using EmployeeMangement.Models;
+using EmployeeMangement.Validators;
 using FluentValidation;
 using System.Text.RegularExpressions;
 
@@ -6,9 +7,10 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
 {
     public class CreateEmployeevalidator : AbstractValidator<CreateEmployee>
     {
-
+        private readonly EmployeeDbcontext EmployeeDbcontextobj;
         public CreateEmployeevalidator()
         {
+
             RuleFor(x => x.Name).Cascade(CascadeMode.StopOnFirstFailure).NotEmpty()
                 .WithMessage("{PropertyName} should not be empty")
                  .Length(3, 25).WithMessage("{PropertyName} should  between 3 and 25 characters")
@@ -32,6 +34,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
             RuleFor(x => x.Salary).NotNull().WithMessage("{PropertyName} should not be Null");
 
         }
+        
 
 
         private bool IsValidName(string name)

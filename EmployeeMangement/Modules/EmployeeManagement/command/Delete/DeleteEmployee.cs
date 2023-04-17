@@ -1,5 +1,8 @@
-﻿using EmployeeMangement.Models;
+﻿using EmployeeMangement.Exception_Handling;
+using EmployeeMangement.Exceptions;
+using EmployeeMangement.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore.Update;
 
 namespace EmployeeMangement.Modules.EmployeeManagement.command.Delete
 {
@@ -10,6 +13,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Delete
     }
     public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployee, ResponseModel>
     {
+       
         private readonly EmployeeDbcontext employeeDbcontextobj;
         public DeleteEmployeeHandler(EmployeeDbcontext obj)
         {
@@ -23,11 +27,13 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Delete
             {
                 employeeDbcontextobj.Employeetable.Remove(Result);
                 await employeeDbcontextobj.SaveChangesAsync();
+                int res = responseModel.Id = Result.Id;
+                responseModel.Additionalinfo = "one row is affected" ;
                 return responseModel;
             }
             else
             {
-                throw new Exception("Invalid id");
+                throw new IdNotFoundException();
             }
 
         }
