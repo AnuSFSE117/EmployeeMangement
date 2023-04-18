@@ -1,8 +1,6 @@
-﻿using EmployeeMangement.Exception_Handling;
-using EmployeeMangement.Exceptions;
+﻿using EmployeeMangement.Exceptions;
 using EmployeeMangement.Models;
 using MediatR;
-using Microsoft.EntityFrameworkCore.Update;
 
 namespace EmployeeMangement.Modules.EmployeeManagement.command.Delete
 {
@@ -21,21 +19,21 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Delete
         }
         public async Task<ResponseModel> Handle(DeleteEmployee request, CancellationToken cancellationToken)
         {
-            var Result = employeeDbcontextobj.Employeetable.Where(a => a.Id == request.Id).FirstOrDefault();
+            var EmployeeDetails = employeeDbcontextobj.Employeetable.Where(a => a.Id == request.Id).FirstOrDefault();
             ResponseModel responseModel = new ResponseModel();
-            if (Result != null)
+            if (EmployeeDetails != null)
             {
-                employeeDbcontextobj.Employeetable.Remove(Result);
+                employeeDbcontextobj.Employeetable.Remove(EmployeeDetails);
                 await employeeDbcontextobj.SaveChangesAsync();
-                int res = responseModel.Id = Result.Id;
+                int res = responseModel.Id = EmployeeDetails.Id;
                 responseModel.Additionalinfo = "one row is affected" ;
-                return responseModel;
+                
             }
             else
             {
                 throw new IdNotFoundException();
             }
-
+            return responseModel;
         }
     }
 }

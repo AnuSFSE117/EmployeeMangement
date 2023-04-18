@@ -5,11 +5,11 @@ using System.Text.Json;
 
 namespace EmployeeMangement.Configurations
 {
-    public class ExceptionMiddleware
+    public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public ExceptionMiddleware(RequestDelegate next)
+        public ExceptionHandlingMiddleware(RequestDelegate next)
         {
             _next = next;
         }
@@ -41,9 +41,9 @@ namespace EmployeeMangement.Configurations
                 status = HttpStatusCode.NotFound;
                 message = exception.Message;
                 stackTrace = exception.StackTrace;
-            }else if(exceptionType == typeof(EmailException))
+            }else if(exceptionType == typeof(EmailAlreadyExistsException))
             {
-                status = HttpStatusCode.BadRequest;
+                status = HttpStatusCode.InternalServerError;
                 message = exception.Message;
                 stackTrace = exception.StackTrace;
             }

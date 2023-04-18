@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Validators;
-using Microsoft.IdentityModel.Tokens;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeMangement.Models
 {

@@ -1,12 +1,9 @@
-﻿using EmployeeMangement.Models;
-using EmployeeMangement.Modules.EmployeeManagement.command.create;
+﻿using EmployeeMangement.Modules.EmployeeManagement.command.create;
 using EmployeeMangement.Modules.EmployeeManagement.command.Delete;
 using EmployeeMangement.Modules.EmployeeManagement.command.Update;
-using EmployeeMangement.Modules.EmployeeManagement.Query;
 using EmployeeMangement.Modules.EmployeeManagement.Query.Get;
 using EmployeeMangement.Modules.EmployeeManagement.Query.GetById;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeMangement.Controllers
@@ -20,61 +17,62 @@ namespace EmployeeMangement.Controllers
         {
             mediator = _mediator;
         }
-
-        
-        [HttpPost]
         /// <summary>  
-        /// add student  
+        /// add Employee  
         /// </summary>  
-         /// <returns>student details</returns>  
+        /// <returns>Employee details</returns> 
+
+        [HttpPost]
+         
         public async Task<IActionResult> Create(CreateEmployee createEmployeeobj)
         {
             return Ok(await mediator.Send(createEmployeeobj));
         }
-
+        
+        /// <summary>  
+        /// update Employee  
+        /// </summary>  
+        /// <returns>updated Employee details </returns>  
 
         [HttpPut]
-        // <summary>  
-        /// update the student  
-        /// </summary>  
-        /// <param name="id">id</param>  
-        /// <returns>updated table </returns>  
+        
         public async Task<IActionResult> Update(updateEmployee updateEmployeeobj)
         {
             return Ok(await mediator.Send(updateEmployeeobj));
         }
 
-
-        [HttpGet]
         /// <summary>  
-        /// Get all Student  
+        /// Get all Employee  
         /// </summary>  
-        /// <returns>List of Student</returns>  
+        /// <returns>List of Employee</returns>  
+        [HttpGet]
+        
         public async Task<IActionResult> Getall()
         {
             return Ok(await mediator.Send( new GetEmployee()));
         }
-        
-        
-        [HttpGet("{id}")]
+
         /// <summary>  
-        /// Get student By ID  
+        /// Get Employee By ID  
         /// </summary>  
         /// <param name="id"> id</param>  
-        /// <returns>student details by id </returns> 
+        /// <returns>Employee details based on id </returns> 
+        [HttpGet("{id}")]
+        
        
         public async Task<IActionResult>GetById(int id)
         {
             return Ok(await mediator.Send(new GetEmployeebyId{ Id = id }));
         }
+        
 
-
-        [HttpDelete("{id}")]
         /// <summary>  
-        /// delete student  
+        /// delete Employee  
         /// </summary>  
         /// <param name="id">id</param>  
-        /// <returns></returns> 
+        /// <returns>Employee details </returns> 
+        [HttpDelete("{id}")]
+        
         public async Task<IActionResult> Delete(int id)
         {
             return Ok(await mediator.Send(new DeleteEmployee { Id = id }));

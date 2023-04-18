@@ -1,5 +1,4 @@
-﻿using EmployeeMangement.Modules.EmployeeManagement.Query.Get;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace EmployeeMangement.Modules.EmployeeManagement.Query.GetById
 {

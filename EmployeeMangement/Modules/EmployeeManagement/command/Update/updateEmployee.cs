@@ -1,5 +1,4 @@
 ﻿using EmployeeMangement.Exception_Handling;
-using EmployeeMangement.Exceptions;
 using EmployeeMangement.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -27,40 +26,42 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
         }
         public async Task<ResponseModel> Handle(updateEmployee obj1, CancellationToken cancellationToken)
         {
-            var Emp = await _db.Employeetable.Where(a => a.Id == obj1.Id).FirstOrDefaultAsync();
+            var EmployeeDetails = await _db.Employeetable.Where(a => a.Id == obj1.Id).FirstOrDefaultAsync();
             ResponseModel responseModel = new ResponseModel();
             try
             {
-                var ismailexists = _db.Employeetable.Where(em => em.Email == obj1.Email).ToList();
-                if (ismailexists.Count > 0)
+                var IsMailExists = _db.Employeetable.Where(em => em.Email == obj1.Email).ToList();
+                if (IsMailExists.Count > 0)
                 {
                     throw new Exception();
                 }
-                if (Emp != null)
+                if (EmployeeDetails != null)
                 {
-                    Emp.Name = obj1.Name;
-                    Emp.Phonenumber = obj1.Phonenumber;
-                    Emp.Email = obj1.Email;
-                    Emp.City = obj1.City;
-                    Emp.Pincode = obj1.Pincode;
-                    Emp.Salary = obj1.Salary;
-                    _db.Employeetable.Update(Emp);
+                    EmployeeDetails.Name = obj1.Name;
+                    EmployeeDetails.Phonenumber = obj1.Phonenumber;
+                    EmployeeDetails.Email = obj1.Email;
+                    EmployeeDetails.City = obj1.City;
+                    EmployeeDetails.Pincode = obj1.Pincode;
+                    EmployeeDetails.Salary = obj1.Salary;
+                    _db.Employeetable.Update(EmployeeDetails);
                     await _db.SaveChangesAsync();
-                    int result = responseModel.Id = Emp.Id;
+                    int result = responseModel.Id = EmployeeDetails.Id;
                     responseModel.Additionalinfo = "Employee details updated Successfully";
-                    return responseModel;
+                    
 
                 }
+                
+                
             }
 
-
+           
             catch (Exception e)
             {
-                responseModel.Additionalinfo = "invalid data";
-               
+                throw new EmailAlreadyExistsException();
             }
-             throw new EmailException();
-
+            
+            return responseModel;
+            
         }
     }
 

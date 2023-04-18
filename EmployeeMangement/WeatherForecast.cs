@@ -1,6 +1,3 @@
-using EmployeeMangement.Models;
-using FluentValidation;
-
 namespace EmployeeMangement
 {
     public class WeatherForecast

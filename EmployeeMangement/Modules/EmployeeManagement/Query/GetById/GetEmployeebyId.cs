@@ -1,10 +1,7 @@
-﻿using EmployeeMangement.Exception_Handling;
-using EmployeeMangement.Exceptions;
+﻿using EmployeeMangement.Exceptions;
 using EmployeeMangement.Models;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata;
 
 namespace EmployeeMangement.Modules.EmployeeManagement.Query.GetById
 {
@@ -22,11 +19,11 @@ namespace EmployeeMangement.Modules.EmployeeManagement.Query.GetById
             public async Task<EmployeeModel> Handle(GetEmployeebyId request, CancellationToken cancellationToken)
             {
 
-                var result = await employeeDbcontextobj.Employeetable.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
+                var EmployeeResult = await employeeDbcontextobj.Employeetable.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
 
-                if (result != null)
+                if (EmployeeResult != null)
                 {
-                    return result;
+                    return EmployeeResult;
                 }
 
 

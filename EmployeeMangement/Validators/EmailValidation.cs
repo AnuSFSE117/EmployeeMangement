@@ -1,13 +1,12 @@
 ﻿using FluentValidation.Validators;
-using Microsoft.AspNetCore.Components.Forms;
 using System.Text.RegularExpressions;
 
 namespace EmployeeMangement.Validators
 {
-    public class EmailValidator : PropertyValidator
+    public class EmailValidation : PropertyValidator
     {
 
-        public EmailValidator() : base("Invalid MailId")
+        public EmailValidation() : base("Invalid MailId")
         {
 
         }

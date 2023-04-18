@@ -1,11 +1,10 @@
 ﻿using EmployeeMangement.Exception_Handling;
 using EmployeeMangement.Models;
 using MediatR;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.ExceptionServices;
 
 namespace EmployeeMangement.Modules.EmployeeManagement.command.create
 {
+    //mediatr requests for CreateEmployee
     public class CreateEmployee : IRequest<ResponseModel>
     {
         public string Name { get; set; }
@@ -30,33 +29,35 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
 
             try
             {
-                var ismailexists = EmployeeDbcontextobj.Employeetable.Where(em => em.Email == obj1.Email).ToList();
-                if (ismailexists.Count > 0)
+                
+                var IsMailExists = EmployeeDbcontextobj.Employeetable.Where(em => em.Email == obj1.Email).ToList();
+                if (IsMailExists.Count > 0)  //checks whether the EmailId Repeats
                 {
                     throw new Exception();
                 }
                 else
                 {
 
-                    var Emp = new EmployeeModel();
-                    Emp.Name = obj1.Name;
-                    Emp.Phonenumber = obj1.Phonenumber;
-                    Emp.Email = obj1.Email;
-                    Emp.City = obj1.City;
-                    Emp.Pincode = obj1.Pincode;
-                    Emp.Salary = obj1.Salary;
-                    EmployeeDbcontextobj.Employeetable.Add(Emp);
+                    var EmployeeDetails = new EmployeeModel();
+                    EmployeeDetails.Name = obj1.Name;
+                    EmployeeDetails.Phonenumber = obj1.Phonenumber;
+                    EmployeeDetails.Email = obj1.Email;
+                    EmployeeDetails.City = obj1.City;
+                    EmployeeDetails.Pincode = obj1.Pincode;
+                    EmployeeDetails.Salary = obj1.Salary;
+                    EmployeeDbcontextobj.Employeetable.Add(EmployeeDetails);
                     await EmployeeDbcontextobj.SaveChangesAsync();
-                    int result = responseModel.Id = Emp.Id;
+                    int result = responseModel.Id = EmployeeDetails.Id;
                     responseModel.Additionalinfo = "Employee details added Successfully";
-                    return responseModel;
+                   
                 }
             }
             catch (Exception e)
             {
-                throw new EmailException();
+                //throws Exception If the given EmailId is already Present
+                throw new EmailAlreadyExistsException();
             }
-            
+         return responseModel;
 
 
         }
