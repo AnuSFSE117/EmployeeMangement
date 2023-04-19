@@ -12,19 +12,19 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Delete
     public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployee, ResponseModel>
     {
        
-        private readonly EmployeeDbcontext employeeDbcontextobj;
-        public DeleteEmployeeHandler(EmployeeDbcontext obj)
+        private readonly EmployeeDbcontext employeeDbcontext;
+        public DeleteEmployeeHandler(EmployeeDbcontext context)
         {
-            employeeDbcontextobj = obj;
+            employeeDbcontext = context;
         }
         public async Task<ResponseModel> Handle(DeleteEmployee request, CancellationToken cancellationToken)
         {
-            var EmployeeDetails = employeeDbcontextobj.Employeetable.Where(a => a.Id == request.Id).FirstOrDefault();
+            var EmployeeDetails = employeeDbcontext.Employeetable.Where(a => a.Id == request.Id).FirstOrDefault();
             ResponseModel responseModel = new ResponseModel();
             if (EmployeeDetails != null)
             {
-                employeeDbcontextobj.Employeetable.Remove(EmployeeDetails);
-                await employeeDbcontextobj.SaveChangesAsync();
+                employeeDbcontext.Employeetable.Remove(EmployeeDetails);
+                await employeeDbcontext.SaveChangesAsync();
                 int res = responseModel.Id = EmployeeDetails.Id;
                 responseModel.Additionalinfo = "one row is affected" ;
                 

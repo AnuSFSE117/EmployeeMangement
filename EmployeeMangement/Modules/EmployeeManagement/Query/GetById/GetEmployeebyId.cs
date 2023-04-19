@@ -10,16 +10,16 @@ namespace EmployeeMangement.Modules.EmployeeManagement.Query.GetById
         public int Id { get; set; }
         public class GetEmployeeHandler : IRequestHandler<GetEmployeebyId, EmployeeModel>
         {
-            private readonly EmployeeDbcontext employeeDbcontextobj;
+            private readonly EmployeeDbcontext employeeDbcontext;
             ResponseModel responseModel = new ResponseModel();
-            public GetEmployeeHandler(EmployeeDbcontext obj)
+            public GetEmployeeHandler(EmployeeDbcontext context)
             {
-                employeeDbcontextobj = obj;
+                employeeDbcontext = context;
             }
             public async Task<EmployeeModel> Handle(GetEmployeebyId request, CancellationToken cancellationToken)
             {
 
-                var EmployeeResult = await employeeDbcontextobj.Employeetable.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
+                var EmployeeResult = await employeeDbcontext.Employeetable.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
 
                 if (EmployeeResult != null)
                 {

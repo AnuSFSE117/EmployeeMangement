@@ -6,7 +6,7 @@ namespace EmployeeMangement.Models
     {
         public EmployeeDbcontext(DbContextOptions options):base(options) { }
          
-           public DbSet<EmployeeModel> Employeetable { get; set; }
+           public virtual DbSet<EmployeeModel> Employeetable { get; set; }
         
 
     }

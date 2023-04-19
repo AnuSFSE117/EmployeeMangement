@@ -19,18 +19,18 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
     }
     public class UpdateEmployeeHandler : IRequestHandler<updateEmployee, ResponseModel>
     {
-        private readonly EmployeeDbcontext _db;
-        public UpdateEmployeeHandler(EmployeeDbcontext obj)
+        private readonly EmployeeDbcontext employeeDbcontext;
+        public UpdateEmployeeHandler(EmployeeDbcontext context)
         {
-            _db = obj;
+            employeeDbcontext = context;
         }
         public async Task<ResponseModel> Handle(updateEmployee obj1, CancellationToken cancellationToken)
         {
-            var EmployeeDetails = await _db.Employeetable.Where(a => a.Id == obj1.Id).FirstOrDefaultAsync();
+            var EmployeeDetails = await employeeDbcontext.Employeetable.Where(a => a.Id == obj1.Id).FirstOrDefaultAsync();
             ResponseModel responseModel = new ResponseModel();
             try
             {
-                var IsMailExists = _db.Employeetable.Where(em => em.Email == obj1.Email).ToList();
+                var IsMailExists = employeeDbcontext.Employeetable.Where(em => em.Email == obj1.Email).ToList();
                 if (IsMailExists.Count > 0)
                 {
                     throw new Exception();
@@ -43,8 +43,8 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
                     EmployeeDetails.City = obj1.City;
                     EmployeeDetails.Pincode = obj1.Pincode;
                     EmployeeDetails.Salary = obj1.Salary;
-                    _db.Employeetable.Update(EmployeeDetails);
-                    await _db.SaveChangesAsync();
+                    employeeDbcontext.Employeetable.Update(EmployeeDetails);
+                    await employeeDbcontext.SaveChangesAsync();
                     int result = responseModel.Id = EmployeeDetails.Id;
                     responseModel.Additionalinfo = "Employee details updated Successfully";
                     

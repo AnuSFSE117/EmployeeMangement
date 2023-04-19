@@ -6,7 +6,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
 {
     public class CreateEmployeevalidator : AbstractValidator<CreateEmployee>
     {
-        private readonly EmployeeDbcontext EmployeeDbcontextobj;
+        private readonly EmployeeDbcontext employeeDbcontext;
         public CreateEmployeevalidator()
         {
 
@@ -20,17 +20,16 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
                 .SetValidator(new PhonenumberValidation()).WithMessage("Invalid PhoneNumber");
 
 
-            RuleFor(x => x.Email).Cascade(CascadeMode.StopOnFirstFailure).NotEmpty().NotNull().WithMessage("{PropertyName} should not be empty")
-                .EmailAddress().WithMessage("Invalid mailid")
+            RuleFor(x => x.Email).Cascade(CascadeMode.StopOnFirstFailure).NotEmpty().WithMessage("{PropertyName} should not be empty")
                 .SetValidator(new EmailValidation());
-
+                
             RuleFor(x => x.City).NotEmpty().WithMessage("{PropertyName} should not be empty")
                 .SetValidator(new Cityvalidation());
 
             RuleFor(x => x.Pincode).Cascade(CascadeMode.StopOnFirstFailure).NotEmpty().WithMessage("{PropertyName} should not be empty")
                 .SetValidator(new PincodeValidation());
 
-            RuleFor(x => x.Salary).NotNull().WithMessage("{PropertyName} should not be Null");
+            RuleFor(x => x.Salary).NotEmpty().WithMessage("{PropertyName} should not be Null");
 
         }
         

@@ -20,8 +20,9 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
 
 
             RuleFor(x => x.Email).NotEmpty().NotNull().WithMessage("{PropertyName} should not be empty")
-                .EmailAddress().WithMessage("Invalid Mailid")
                 .SetValidator(new Validators.EmailValidation());
+
+               
 
             RuleFor(x => x.City).NotEmpty().WithMessage("{PropertyName} should not be empty")
                 .SetValidator(new Cityvalidation());
@@ -29,18 +30,10 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
             RuleFor(x => x.Pincode).NotEmpty().WithMessage("{PropertyName} should not be empty")
                 .SetValidator(new PincodeValidation());
 
-            RuleFor(x => x.Salary).NotNull().WithMessage("{PropertyName} should not be Null");
+            RuleFor(x => x.Salary).NotEmpty().WithMessage("{PropertyName} should not be Null");
 
         }
         
-        
-        
-
-
-
-
-
-
     }
 
 

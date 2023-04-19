@@ -16,10 +16,10 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
     }
     public class CreateEmployeeHandler : IRequestHandler<CreateEmployee, ResponseModel>
     {
-        private readonly EmployeeDbcontext EmployeeDbcontextobj;
-        public CreateEmployeeHandler(EmployeeDbcontext obj)
+        private readonly EmployeeDbcontext employeeDbcontext;
+        public CreateEmployeeHandler(EmployeeDbcontext context)
         {
-            EmployeeDbcontextobj = obj;
+            employeeDbcontext = context;
         }
 
         public async Task<ResponseModel> Handle(CreateEmployee obj1, CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
             try
             {
                 
-                var IsMailExists = EmployeeDbcontextobj.Employeetable.Where(em => em.Email == obj1.Email).ToList();
+                var IsMailExists = employeeDbcontext.Employeetable.Where(em => em.Email == obj1.Email).ToList();
                 if (IsMailExists.Count > 0)  //checks whether the EmailId Repeats
                 {
                     throw new Exception();
@@ -45,8 +45,8 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
                     EmployeeDetails.City = obj1.City;
                     EmployeeDetails.Pincode = obj1.Pincode;
                     EmployeeDetails.Salary = obj1.Salary;
-                    EmployeeDbcontextobj.Employeetable.Add(EmployeeDetails);
-                    await EmployeeDbcontextobj.SaveChangesAsync();
+                    employeeDbcontext.Employeetable.Add(EmployeeDetails);
+                    await employeeDbcontext.SaveChangesAsync();
                     int result = responseModel.Id = EmployeeDetails.Id;
                     responseModel.Additionalinfo = "Employee details added Successfully";
                    
@@ -55,7 +55,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
             catch (Exception e)
             {
                 //throws Exception If the given EmailId is already Present
-                throw new EmailAlreadyExistsException();
+                //throw new EmailAlreadyExistsException();
             }
          return responseModel;
 

@@ -7,16 +7,16 @@ namespace EmployeeMangement.Modules.EmployeeManagement.Query.Get
     {
         public class GetEmployeeHandler : IRequestHandler<GetEmployee, List<EmployeeModel>>
         {
-            private readonly EmployeeDbcontext EmployeeDbcontextobj;
+            private readonly EmployeeDbcontext employeeDbcontext;
             
-            public GetEmployeeHandler(EmployeeDbcontext obj)
+            public GetEmployeeHandler(EmployeeDbcontext context)
             {
-                EmployeeDbcontextobj = obj;
+                employeeDbcontext = context;
             }
             public Task<List<EmployeeModel>> Handle(GetEmployee request, CancellationToken cancellationToken)
             {
 
-                return Task.FromResult(EmployeeDbcontextobj.Employeetable.ToList());
+                return Task.FromResult(employeeDbcontext.Employeetable.ToList());
             }
         }
     }
