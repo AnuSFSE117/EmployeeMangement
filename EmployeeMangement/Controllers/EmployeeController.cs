@@ -19,7 +19,29 @@ namespace EmployeeMangement.Controllers
         }
         /// <summary>  
         /// add Employee  
-        /// </summary>  
+        /// </summary> 
+        /// <remarks>
+        /// 
+        /// Example Value
+        /// ------- -----
+        /// 
+        /// {
+        /// 
+        ///    "Name"="Anu" 
+        ///    
+        ///    "Phonenumber "= 9791211302
+        ///    
+        ///    "Email" = "anu26@gmail.com"
+        ///    
+        ///    "City" = "Chennai"
+        ///    
+        ///    "Pincode" = 629179
+        ///    
+        ///    "Salary" = 10000
+        ///    
+        /// }
+        ///    
+        /// </remarks>
         /// <returns>Employee details</returns> 
 
         [HttpPost]
@@ -28,10 +50,20 @@ namespace EmployeeMangement.Controllers
         {
             return Ok(await mediator.Send(createEmployeeobj));
         }
-        
+
         /// <summary>  
         /// update Employee  
-        /// </summary>  
+        /// </summary>
+        /// <remarks>
+        ///   Id=1
+        ///   "Name" = "shalini"
+        ///   "Phonenumber" = 7598275737
+        ///   "Email" = "anu2611@gmail.com"
+        ///   "City" = "Chennai"
+        ///   "Pincode" = 600040
+        ///   "Salary" = 15000
+        /// 
+        /// </remarks>
         /// <returns>updated Employee details </returns>  
 
         [HttpPut]
@@ -54,7 +86,8 @@ namespace EmployeeMangement.Controllers
 
         /// <summary>  
         /// Get Employee By ID  
-        /// </summary>  
+        /// </summary> 
+        /// <remarks> Id=1 </remarks>
         /// <param name="id"> id</param>  
         /// <returns>Employee details based on id </returns> 
         [HttpGet("{id}")]
@@ -64,11 +97,12 @@ namespace EmployeeMangement.Controllers
         {
             return Ok(await mediator.Send(new GetEmployeebyId{ Id = id }));
         }
-        
+
 
         /// <summary>  
         /// delete Employee  
-        /// </summary>  
+        /// </summary> 
+        /// <remarks> Id=1 </remarks>
         /// <param name="id">id</param>  
         /// <returns>Employee details </returns> 
         [HttpDelete("{id}")]

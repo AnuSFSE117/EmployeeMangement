@@ -12,7 +12,7 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
             validator = new Updateemployeevalidator();
         }
         [Fact]
-        public void MinimumId() 
+        public void FailsifMinimumId() 
         {
             var request=new updateEmployee() {Id = 0, Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
             validator.ShouldHaveValidationErrorFor(x => x.Id, request);
@@ -25,7 +25,15 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
 
         }
         [Fact]
-        public void NameMinimumCharacters()
+        public void NameNull()
+        {
+            var request = new updateEmployee() { Phonenumber = 9791211302, Email = "anu26@gmaail.com ", City = "Chennai", Pincode = 629179, Salary = 10000 };
+            // validator.Validate(request);
+            validator.ShouldHaveValidationErrorFor(x => x.Email, request);
+
+        }
+        [Fact]
+        public void NoMinimumCharacters()
         {
             var request = new updateEmployee() { Name = "An", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
             // validator.Validate(request);
@@ -41,7 +49,7 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
 
         }
         [Fact]
-        public void PhoneNumberNotEmpty()
+        public void PhoneNumberEmpty()
         {
             var request = new updateEmployee() { Name = "Anu", Phonenumber = 0, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
             // validator.Validate(request);
@@ -65,6 +73,14 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
 
         }
         [Fact]
+        public void EmailNull()
+        {
+            var request = new updateEmployee() { Name = "Anu", Phonenumber = 9791211302, City = "Chennai", Pincode = 629179, Salary = 10000 };
+            // validator.Validate(request);
+            validator.ShouldHaveValidationErrorFor(x => x.Email, request);
+
+        }
+        [Fact]
         public void InvalidEmailId()
         {
             var request = new updateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26gmail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
@@ -80,6 +96,7 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
             validator.ShouldHaveValidationErrorFor(x => x.City, request);
 
         }
+        
         [Fact]
         public void InvalidCityName()
         {
@@ -89,7 +106,7 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
 
         }
         [Fact]
-        public void PincodeNotEmpty()
+        public void PincodeEmpty()
         {
             var request = new updateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 0, Salary = 10000 };
             // validator.Validate(request);
@@ -105,29 +122,14 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
 
         }
         [Fact]
-        public void SalaryNull()
+        public void SalaryEmpty()
         {
-            var request = new updateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179 };
+            var request = new updateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179 ,Salary=0};
             // validator.Validate(request);
             validator.ShouldHaveValidationErrorFor(x => x.Salary, request);
 
         }
-        [Fact]
-        public void NameNotEmpty()
-        {
-            var request = new updateEmployee() { Name = "A1", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.Name, request);
-
-        }
-        [Fact]
-        public void HaveMinimumCharacters()
-        {
-            var request = new updateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.Name, request);
-
-        }
+       
         [Fact]
         public void ValidName()
         {
@@ -136,14 +138,7 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
             validator.ShouldNotHaveValidationErrorFor(x => x.Name, request);
 
         }
-        [Fact]
-        public void PhoneNumbeNotEmpty()
-        {
-            var request = new updateEmployee() { Name = "Anu", Phonenumber = 784, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.Phonenumber, request);
-
-        }
+       
         [Fact]
         public void validPhoneNumber()
         {
@@ -152,14 +147,7 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
             validator.ShouldNotHaveValidationErrorFor(x => x.Phonenumber, request);
 
         }
-        [Fact]
-        public void EmailNotEmpty()
-        {
-            var request = new updateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = " anu", City = "Chennai", Pincode = 629179, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.Email, request);
-
-        }
+       
         [Fact]
         public void validEmailId()
         {
@@ -168,13 +156,8 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
             validator.ShouldNotHaveValidationErrorFor(x => x.Email, request);
 
         }
-        public void CityNotEmpty()
-        {
-            var request = new updateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = " A123", Pincode = 629179, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.City, request);
-
-        }
+        
+       
         [Fact]
         public void validCityName()
         {
@@ -183,14 +166,7 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
             validator.ShouldNotHaveValidationErrorFor(x => x.City, request);
 
         }
-        [Fact]
-        public void PincodenotEmpty()
-        {
-            var request = new updateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 87, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.Pincode, request);
-
-        }
+       
         [Fact]
         public void validPincode()
         {
@@ -200,7 +176,7 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
 
         }
         [Fact]
-        public void SalaryNotNull()
+        public void SalaryNotEmpty()
         {
             var request = new updateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
             // validator.Validate(request);

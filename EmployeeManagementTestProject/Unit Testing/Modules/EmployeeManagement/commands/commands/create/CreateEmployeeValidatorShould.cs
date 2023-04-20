@@ -20,7 +20,15 @@ namespace EmployeeMangement.Unit_Testing.Modules.EmployeeManagement.create
             
         }
         [Fact]
-        public void NameMinimumCharacters()
+        public void NameNull()
+        {
+            var request = new CreateEmployee() { Phonenumber = 9791211302, Email = "anu26@gmaail.com ", City = "Chennai", Pincode = 629179, Salary = 10000 };
+            // validator.Validate(request);
+            validator.ShouldHaveValidationErrorFor(x => x.Email, request);
+
+        }
+        [Fact]
+        public void NoMinimumCharacters()
         {
             var request = new CreateEmployee() { Name="An", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
             // validator.Validate(request);
@@ -60,6 +68,14 @@ namespace EmployeeMangement.Unit_Testing.Modules.EmployeeManagement.create
 
         }
         [Fact]
+        public void EmailNull()
+        {
+            var request = new CreateEmployee() { Name = "Anu", Phonenumber = 9791211302, City = "Chennai", Pincode = 629179, Salary = 10000 };
+            // validator.Validate(request);
+            validator.ShouldHaveValidationErrorFor(x => x.Email, request);
+
+        }
+        [Fact]
         public void InvalidEmailId()
         {
             var request = new CreateEmployee() {Name = "Anu", Phonenumber = 9791211302, Email = "anu26gmail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
@@ -70,11 +86,12 @@ namespace EmployeeMangement.Unit_Testing.Modules.EmployeeManagement.create
         [Fact]
         public void CityEmpty()
         {
-            var request = new CreateEmployee() {Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = " ", Pincode = 629179, Salary = 10000 };
+            var request = new CreateEmployee() {Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "", Pincode = 629179, Salary = 10000 };
             // validator.Validate(request);
             validator.ShouldHaveValidationErrorFor(x => x.City, request);
 
         }
+       
         [Fact]
         public void InvalidCityName()
         {
@@ -100,29 +117,14 @@ namespace EmployeeMangement.Unit_Testing.Modules.EmployeeManagement.create
 
         }
         [Fact]
-        public void SalaryNull()
+        public void SalaryEmpty()
         {
-            var request = new CreateEmployee() {Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179};
+            var request = new CreateEmployee() {Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179,Salary=0};
             // validator.Validate(request);
             validator.ShouldHaveValidationErrorFor(x => x.Salary, request);
 
         }
-        [Fact]
-        public void NameNotEmpty()
-        {
-            var request = new CreateEmployee() { Name = "A1", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.Name, request);
-
-        }
-        [Fact]
-        public void HaveMinimumCharacters()
-        {
-            var request = new CreateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.Name, request);
-
-        }
+        
         [Fact]
         public void ValidName()
         {
@@ -131,14 +133,7 @@ namespace EmployeeMangement.Unit_Testing.Modules.EmployeeManagement.create
             validator.ShouldNotHaveValidationErrorFor(x => x.Name, request);
 
         }
-        [Fact]
-        public void PhoneNumbeNotEmpty()
-        {
-            var request = new CreateEmployee() { Name = "Anu", Phonenumber = 784, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.Phonenumber, request);
-
-        }
+       
         [Fact]
         public void validPhoneNumber()
         {
@@ -147,14 +142,7 @@ namespace EmployeeMangement.Unit_Testing.Modules.EmployeeManagement.create
             validator.ShouldNotHaveValidationErrorFor(x => x.Phonenumber, request);
 
         }
-        [Fact]
-        public void EmailNotEmpty()
-        {
-            var request = new CreateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = " anu", City = "Chennai", Pincode = 629179, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.Email, request);
-
-        }
+       
         [Fact]
         public void validEmailId()
         {
@@ -163,13 +151,7 @@ namespace EmployeeMangement.Unit_Testing.Modules.EmployeeManagement.create
             validator.ShouldNotHaveValidationErrorFor(x => x.Email, request);
 
         }
-        public void CityNotEmpty()
-        {
-            var request = new CreateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = " A123", Pincode = 629179, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.City, request);
-
-        }
+       
         [Fact]
         public void validCityName()
         {
@@ -178,14 +160,7 @@ namespace EmployeeMangement.Unit_Testing.Modules.EmployeeManagement.create
             validator.ShouldNotHaveValidationErrorFor(x => x.City, request);
 
         }
-        [Fact]
-        public void PincodenotEmpty()
-        {
-            var request = new CreateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 87, Salary = 10000 };
-            // validator.Validate(request);
-            validator.ShouldNotHaveValidationErrorFor(x => x.Pincode, request);
-
-        }
+       
         [Fact]
         public void validPincode()
         {
@@ -195,7 +170,7 @@ namespace EmployeeMangement.Unit_Testing.Modules.EmployeeManagement.create
 
         }
         [Fact]
-        public void SalaryNotNull()
+        public void SalaryNotEmpty()
         {
             var request = new CreateEmployee() { Name = "Anu", Phonenumber = 9791211302, Email = "anu26@gmaail.com", City = "Chennai", Pincode = 629179,Salary=10000 };
             // validator.Validate(request);

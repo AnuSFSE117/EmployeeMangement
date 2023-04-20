@@ -47,6 +47,12 @@ namespace EmployeeMangement.Configurations
                 message = exception.Message;
                 stackTrace = exception.StackTrace;
             }
+            else if (exceptionType == typeof(RecordsNotFoundException))
+            {
+                status = HttpStatusCode.NotFound;
+                message = exception.Message;
+                stackTrace = exception.StackTrace;
+            }
             else
             {
                 status = HttpStatusCode.InternalServerError;

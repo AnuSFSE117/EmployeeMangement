@@ -1,5 +1,8 @@
-﻿using EmployeeMangement.Models;
+﻿using EmployeeMangement.Exceptions;
+using EmployeeMangement.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace EmployeeMangement.Modules.EmployeeManagement.Query.Get
 {
@@ -11,12 +14,26 @@ namespace EmployeeMangement.Modules.EmployeeManagement.Query.Get
             
             public GetEmployeeHandler(EmployeeDbcontext context)
             {
+                
                 employeeDbcontext = context;
             }
-            public Task<List<EmployeeModel>> Handle(GetEmployee request, CancellationToken cancellationToken)
+            public async Task<List<EmployeeModel>> Handle(GetEmployee request, CancellationToken cancellationToken)
             {
+                var Employee = await employeeDbcontext.Employeetable.ToListAsync();
+                //Returns all Employee Details from Database 
+                if (Employee.Count!=0)
+                {
+                    return Employee;
 
-                return Task.FromResult(employeeDbcontext.Employeetable.ToList());
+                }
+                //Throws an Exception if the id is not found
+                else
+                {
+                    throw new RecordsNotFoundException();
+
+                }
+
+                
             }
         }
     }

@@ -11,7 +11,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
 
             RuleFor(x => x.Name).Cascade(CascadeMode.StopOnFirstFailure).NotEmpty()
                 .WithMessage("{PropertyName} should not be empty")
-                 .Length(3, 25).WithMessage("{PropertyName} should  between 3 and 25 characters")
+               .Length(3, 25).WithMessage("{PropertyName} should  between 3 and 25 characters")
                  .SetValidator(new Namevalidator()).WithMessage("Invalid{PropertyName}");
 
             RuleFor(x => x.Phonenumber).Cascade(CascadeMode.StopOnFirstFailure).NotEmpty()
@@ -19,14 +19,14 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
                 .SetValidator(new PhonenumberValidation()).WithMessage("Invalid PhoneNumber");
 
 
-            RuleFor(x => x.Email).NotEmpty().NotNull().WithMessage("{PropertyName} should not be empty")
+            RuleFor(x => x.Email).NotEmpty().WithMessage("{PropertyName} should not be empty")
+                .NotNull().WithMessage("{PropertyName}should not be Null")
                 .SetValidator(new Validators.EmailValidation());
 
-               
 
-            RuleFor(x => x.City).NotEmpty().WithMessage("{PropertyName} should not be empty")
-                .SetValidator(new Cityvalidation());
 
+            RuleFor(x => x.City).NotEmpty().WithMessage("{PropertyName} should not be empty").SetValidator(new Cityvalidation());
+                
             RuleFor(x => x.Pincode).NotEmpty().WithMessage("{PropertyName} should not be empty")
                 .SetValidator(new PincodeValidation());
 

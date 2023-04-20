@@ -28,8 +28,4 @@
     <ProjectReference Include="..\EmployeeMangement\EmployeeMangement.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Unit Testing\Modules\EmployeeManagement\commands\Query\Get\" />
-  </ItemGroup>
-
 </Project>

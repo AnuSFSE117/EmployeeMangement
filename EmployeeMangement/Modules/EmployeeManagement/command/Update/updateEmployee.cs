@@ -1,4 +1,5 @@
 ﻿using EmployeeMangement.Exception_Handling;
+using EmployeeMangement.Exceptions;
 using EmployeeMangement.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
 {
     public class updateEmployee : IRequest<ResponseModel>
     {
+        
         public int Id { get; set; }
         public string Name { get; set; }
         public long Phonenumber { get; set; }
@@ -17,6 +19,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
         public int Salary { get; set; }
 
     }
+    //Handler for Update Employee
     public class UpdateEmployeeHandler : IRequestHandler<updateEmployee, ResponseModel>
     {
         private readonly EmployeeDbcontext employeeDbcontext;
@@ -24,44 +27,31 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
         {
             employeeDbcontext = context;
         }
-        public async Task<ResponseModel> Handle(updateEmployee obj1, CancellationToken cancellationToken)
+        public async Task<ResponseModel> Handle(updateEmployee updateemp, CancellationToken cancellationToken)
         {
-            var EmployeeDetails = await employeeDbcontext.Employeetable.Where(a => a.Id == obj1.Id).FirstOrDefaultAsync();
+            var EmployeeDetails = await employeeDbcontext.Employeetable.Where(a => a.Id == updateemp.Id).FirstOrDefaultAsync();
             ResponseModel responseModel = new ResponseModel();
-            try
+            //updates the value if the database is not empty
+            if (EmployeeDetails != null)
             {
-                var IsMailExists = employeeDbcontext.Employeetable.Where(em => em.Email == obj1.Email).ToList();
-                if (IsMailExists.Count > 0)
-                {
-                    throw new Exception();
-                }
-                if (EmployeeDetails != null)
-                {
-                    EmployeeDetails.Name = obj1.Name;
-                    EmployeeDetails.Phonenumber = obj1.Phonenumber;
-                    EmployeeDetails.Email = obj1.Email;
-                    EmployeeDetails.City = obj1.City;
-                    EmployeeDetails.Pincode = obj1.Pincode;
-                    EmployeeDetails.Salary = obj1.Salary;
-                    employeeDbcontext.Employeetable.Update(EmployeeDetails);
-                    await employeeDbcontext.SaveChangesAsync();
-                    int result = responseModel.Id = EmployeeDetails.Id;
-                    responseModel.Additionalinfo = "Employee details updated Successfully";
-                    
-
-                }
-                
-                
+                EmployeeDetails.Name = updateemp.Name;
+                EmployeeDetails.Phonenumber = updateemp.Phonenumber;
+                EmployeeDetails.Email = updateemp.Email;
+                EmployeeDetails.City = updateemp.City;
+                EmployeeDetails.Pincode = updateemp.Pincode;
+                EmployeeDetails.Salary = updateemp.Salary;
+                employeeDbcontext.Employeetable.Update(EmployeeDetails);
+                responseModel.Id = await employeeDbcontext.SaveChangesAsync();
+                responseModel.Additionalinfo = "Employee details updated Successfully";
+            }
+            //Throws Exception if the database is empty
+            else
+            {
+                throw new RecordsNotFoundException();
             }
 
-           
-            catch (Exception e)
-            {
-                throw new EmailAlreadyExistsException();
-            }
-            
             return responseModel;
-            
+
         }
     }
 
