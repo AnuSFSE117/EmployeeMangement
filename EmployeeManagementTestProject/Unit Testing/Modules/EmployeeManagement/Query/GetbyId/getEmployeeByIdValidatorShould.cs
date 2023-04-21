@@ -6,20 +6,21 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
 {
     public class getEmployeeByIdValidatorShould
     {
-        getEmployeeByIdValidator validator;
+        GetEmployeeByIdValidator validator;
         public getEmployeeByIdValidatorShould()
         {
-            validator = new getEmployeeByIdValidator();
+            validator = new GetEmployeeByIdValidator();
 
 
         }
         [Fact]
-        public void NotMinimumId()
+        public void FailsifNoMinimumId()
         {
             var request = new GetEmployeebyId() { Id = 0 };
             validator.ShouldHaveValidationErrorFor(x => x.Id, request);
         }
-        public void MinimumId()
+        [Fact]
+        public void PassIfValidId()
         {
             var request = new GetEmployeebyId() { Id = 1 };
             validator.ShouldNotHaveValidationErrorFor(x => x.Id, request);

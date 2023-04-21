@@ -11,13 +11,13 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
             validator= new DeleteEmployeeByIdValidator();
         }
         [Fact]
-        public void NotMinimumId()
+        public void failsIfNoMinimumId()
         {
             var request = new DeleteEmployee() { Id = 0 };
             validator.ShouldHaveValidationErrorFor(x => x.Id, request);
         }
         [Fact]
-        public void MinimumId()
+        public void PassIfValidId()
         {
             var request = new DeleteEmployee() { Id = 1 };
             validator.ShouldNotHaveValidationErrorFor(x => x.Id, request);

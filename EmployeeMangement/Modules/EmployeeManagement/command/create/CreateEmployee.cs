@@ -4,8 +4,8 @@ using MediatR;
 
 namespace EmployeeMangement.Modules.EmployeeManagement.command.create
 {
-    // requests for CreateEmployee
-    public class CreateEmployee : IRequest<ResponseModel>
+    
+    public class CreateEmployee : IRequest<EntityModel>
     {
         public string Name { get; set; }
         public long Phonenumber { get; set; }
@@ -14,7 +14,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
         public int Pincode { get; set; }
         public int Salary { get; set; }
     }
-    public class CreateEmployeeHandler : IRequestHandler<CreateEmployee, ResponseModel>
+    public class CreateEmployeeHandler : IRequestHandler<CreateEmployee, EntityModel>
     {
         private readonly EmployeeDbcontext employeeDbcontext;
         public CreateEmployeeHandler(EmployeeDbcontext context)
@@ -22,41 +22,43 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
             employeeDbcontext = context;
         }
 
-        public async Task<ResponseModel> Handle(CreateEmployee createemp, CancellationToken cancellationToken)
+        public async Task<EntityModel> Handle(CreateEmployee createemp, CancellationToken cancellationToken)
         {
-            ResponseModel responseModel = new ResponseModel();
-            try
-            {
-                
+            EntityModel responseModel = new EntityModel();
+             
                 var IsMailExists = employeeDbcontext.Employeetable.Where(em => em.Email == createemp.Email).ToList();
-                //checks whether the EmailId is already Exist
-                if (IsMailExists.Count > 0)  
+            //checks whether the EmailId is already Exist
+            if (IsMailExists.Count ==1)
+            {
+                throw new EmailAlreadyExistsException();
+            }
+            else
+            {
+
+                var EmployeeDetails = new EmployeeModel();
+                EmployeeDetails.Name = createemp.Name;
+                EmployeeDetails.Phonenumber = createemp.Phonenumber;
+                EmployeeDetails.Email = createemp.Email;
+                EmployeeDetails.City = createemp.City;
+                EmployeeDetails.Pincode = createemp.Pincode;
+                EmployeeDetails.Salary = createemp.Salary;
+                employeeDbcontext.Employeetable.Add(EmployeeDetails);
+                await employeeDbcontext.SaveChangesAsync();
+                responseModel.ResponseId = employeeDbcontext.Employeetable.Count();
+                if (responseModel.ResponseId > 0)
                 {
-                    throw new Exception();
+                    responseModel.Additionalinfo = "Employee Details added successfully";
                 }
                 else
                 {
-
-                    var EmployeeDetails = new EmployeeModel();
-                    EmployeeDetails.Name = createemp.Name;
-                    EmployeeDetails.Phonenumber = createemp.Phonenumber;
-                    EmployeeDetails.Email = createemp.Email;
-                    EmployeeDetails.City = createemp.City;
-                    EmployeeDetails.Pincode = createemp.Pincode;
-                    EmployeeDetails.Salary = createemp.Salary;
-                    employeeDbcontext.Employeetable.Add(EmployeeDetails);
-                    responseModel.Id = await employeeDbcontext.SaveChangesAsync();
-                    responseModel.Additionalinfo = "Employee details added Successfully";
-                   
+                    responseModel.Additionalinfo = "Employee Details Not added successfully";
                 }
-            }
-            catch (Exception e)
-            {
-                //throws Exception If the given EmailId is already Exist
-                throw new EmailAlreadyExistsException();
-            }
-         return responseModel;
+                return responseModel;
 
+            }
+            
+           
+         
 
         }
     }

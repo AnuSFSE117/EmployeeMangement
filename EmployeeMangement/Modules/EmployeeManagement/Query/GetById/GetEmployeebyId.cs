@@ -13,7 +13,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.Query.GetById
         public class GetEmployeeByIdHandler : IRequestHandler<GetEmployeebyId, EmployeeModel>
         {
             private readonly EmployeeDbcontext employeeDbcontext;
-            ResponseModel responseModel = new ResponseModel();
+            EntityModel responseModel = new EntityModel();
             public GetEmployeeByIdHandler(EmployeeDbcontext context)
             {
                 employeeDbcontext = context;
@@ -22,7 +22,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.Query.GetById
             {
 
                 var Employee = await employeeDbcontext.Employeetable.Where(a => a.Id == request.Id).FirstOrDefaultAsync();
-                //Return the Employee detail if the id is exist in database
+                //Return the Employee detail if id is exist.
                 if (Employee != null)
                 {
                     return Employee;

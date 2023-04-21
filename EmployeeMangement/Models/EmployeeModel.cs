@@ -6,11 +6,6 @@ namespace EmployeeMangement.Models
     {
         [Key]
         public int Id { get; set; }
-       
-        [StringLength(100, MinimumLength = 2)]
-
-        [Required(ErrorMessage = "Name is mandatory")]
-        [RegularExpression(".*[a-zA-z]+.*", ErrorMessage = "Numerical values are not alowed")]
         public string Name { get; set; }
         public long Phonenumber { get; set; }
         public string Email { get; set; }

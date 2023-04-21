@@ -1,4 +1,5 @@
-﻿using EmployeeMangement.Modules.EmployeeManagement.command.create;
+﻿using EmployeeMangement.Models;
+using EmployeeMangement.Modules.EmployeeManagement.command.create;
 using EmployeeMangement.Modules.EmployeeManagement.command.Delete;
 using EmployeeMangement.Modules.EmployeeManagement.command.Update;
 using EmployeeMangement.Modules.EmployeeManagement.Query.Get;
@@ -27,17 +28,17 @@ namespace EmployeeMangement.Controllers
         /// 
         /// {
         /// 
-        ///    "Name"="Anu" 
+        ///       "Name"="Test" ,
         ///    
-        ///    "Phonenumber "= 9791211302
+        ///       "Phonenumber "= 9791211302,
         ///    
-        ///    "Email" = "anu26@gmail.com"
+        ///       "Email" = "TestUser@gmail.com",
         ///    
-        ///    "City" = "Chennai"
+        ///       "City" = "Chennai",
         ///    
-        ///    "Pincode" = 629179
+        ///       "Pincode" = 629179,
         ///    
-        ///    "Salary" = 10000
+        ///       "Salary" = 10000
         ///    
         /// }
         ///    
@@ -45,71 +46,111 @@ namespace EmployeeMangement.Controllers
         /// <returns>Employee details</returns> 
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
          
-        public async Task<IActionResult> Create(CreateEmployee createEmployeeobj)
+        public async Task<EntityModel> Create(CreateEmployee createEmployee)
         {
-            return Ok(await mediator.Send(createEmployeeobj));
+            var result= await mediator.Send(createEmployee);
+            return result;
         }
 
         /// <summary>  
         /// update Employee  
         /// </summary>
         /// <remarks>
-        ///   Id=1
-        ///   "Name" = "shalini"
-        ///   "Phonenumber" = 7598275737
-        ///   "Email" = "anu2611@gmail.com"
-        ///   "City" = "Chennai"
-        ///   "Pincode" = 600040
-        ///   "Salary" = 15000
+        ///   Example Value
+        /// ------- -----
+        /// 
+        /// {
+        /// 
+        ///        "Name"="Test" ,
+        ///    
+        ///        "Phonenumber "= 7598275737,
+        ///    
+        ///        "Email" = "Test@gmail.com",
+        ///    
+        ///        "City" = "Chennai",
+        ///    
+        ///        "Pincode" = 629179,
+        ///    
+        ///        "Salary" = 10000
+        ///    
+        /// }
         /// 
         /// </remarks>
         /// <returns>updated Employee details </returns>  
 
         [HttpPut]
-        
-        public async Task<IActionResult> Update(updateEmployee updateEmployeeobj)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<EntityModel> Update(UpdateEmployee updateEmployee)
         {
-            return Ok(await mediator.Send(updateEmployeeobj));
+            var result=await mediator.Send(updateEmployee);
+            return result;
         }
 
+       
+        
         /// <summary>  
         /// Get all Employee  
         /// </summary>  
         /// <returns>List of Employee</returns>  
-        [HttpGet]
         
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
         public async Task<IActionResult> Getall()
         {
-            return Ok(await mediator.Send( new GetEmployee()));
+            return Ok(await mediator.Send(new GetEmployee()));
         }
 
         /// <summary>  
         /// Get Employee By ID  
-        /// </summary> 
-        /// <remarks> Id=1 </remarks>
+        /// </summary>
+        /// <remarks>
+        ///  Example Value
+        /// ------- -----
+        /// 
+        /// {
+        /// 
+        ///      "Id"=1
+        /// 
+        /// }
+        /// </remarks>
         /// <param name="id"> id</param>  
         /// <returns>Employee details based on id </returns> 
         [HttpGet("{id}")]
-        
-       
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+
         public async Task<IActionResult>GetById(int id)
         {
             return Ok(await mediator.Send(new GetEmployeebyId{ Id = id }));
+            
         }
 
 
         /// <summary>  
         /// delete Employee  
         /// </summary> 
-        /// <remarks> Id=1 </remarks>
+        ///  <remarks> 
+        /// Example Value
+        /// ------- -----
+        /// 
+        /// {
+        /// 
+        ///         "Id"=1
+        /// 
+        /// }
+        /// </remarks>
         /// <param name="id">id</param>  
         /// <returns>Employee details </returns> 
         [HttpDelete("{id}")]
         
-        public async Task<IActionResult> Delete(int id)
+        public async Task<EntityModel> Delete(int id)
         {
-            return Ok(await mediator.Send(new DeleteEmployee { Id = id }));
+           var result=await mediator.Send(new DeleteEmployee { Id = id });
+            return result;
         }
 
 

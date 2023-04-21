@@ -4,16 +4,16 @@ using FluentValidation;
 
 namespace EmployeeMangement.Modules.EmployeeManagement.command.create
 {
-    public class CreateEmployeevalidator : AbstractValidator<CreateEmployee>
+    public class CreateEmployeeValidator : AbstractValidator<CreateEmployee>
     {
         
-        public CreateEmployeevalidator()
+        public CreateEmployeeValidator()
         {
 
             RuleFor(x => x.Name).Cascade(CascadeMode.StopOnFirstFailure).NotEmpty()
                 .WithMessage("{PropertyName} should not be empty")
                  .Length(3, 25).WithMessage("{PropertyName} should  between 3 and 25 characters")
-                 .SetValidator(new Namevalidator()).WithMessage("Invalid Name");
+                 .SetValidator(new Stringvalidation()).WithMessage("Invalid Name");
 
             RuleFor(x => x.Phonenumber).Cascade(CascadeMode.StopOnFirstFailure).NotEmpty()
                 .WithMessage("{PropertyName} should not be empty")
@@ -24,7 +24,7 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.create
                 .NotNull().WithMessage("{PropertyName}should not be Null")
                 .SetValidator(new EmailValidation());
 
-            RuleFor(x => x.City).NotEmpty().WithMessage("{PropertyName} should not be empty").SetValidator(new Cityvalidation());
+            RuleFor(x => x.City).NotEmpty().WithMessage("{PropertyName} should not be empty").SetValidator(new Stringvalidation());
                
                
 

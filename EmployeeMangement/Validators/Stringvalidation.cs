@@ -3,17 +3,15 @@ using System.Text.RegularExpressions;
 
 namespace EmployeeMangement.Validators
 {
-    public class Cityvalidation : PropertyValidator
+    public class Stringvalidation: PropertyValidator
     {
-        public Cityvalidation() : base("Invalid City")
+        public Stringvalidation() : base("Invalid {PropertyName}")
         {
 
         }
-
-
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            Regex regex = new Regex(@"^[a-z\s]+$",RegexOptions.IgnoreCase);
+            Regex regex = new Regex(@"^[a-z]+$", RegexOptions.IgnoreCase);
             Match match = regex.Match(context.PropertyValue.ToString());
             if (match.Success)
                 return true;
@@ -22,6 +20,7 @@ namespace EmployeeMangement.Validators
         }
 
     }
+
 
 }
 

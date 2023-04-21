@@ -22,20 +22,20 @@ namespace EmployeeManagementTestProject.Unit_Testing.Modules.EmployeeManagement.
         [Fact]
         public void passvalidation()
         {
-            var request = new updateEmployee() {Id=1, Name = "shalini", Phonenumber = 7598275737, Email = "anu2611@gmail.com", City = "Chennai", Pincode = 600040, Salary = 15000 };
+            var request = new UpdateEmployee() {Id=1, Name = "shalini", Phonenumber = 7598275737, Email = "anu2611@gmail.com", City = "Chennai", Pincode = 600040, Salary = 15000 };
             dbContextMock.Setup(x => x.SaveChangesAsync(CancellationToken.None)).Returns(() => Task.Run(() => { return 1; })).Verifiable();
             var response = handler.Handle(request, CancellationToken.None);
-            Assert.True(response.Result.Id == 1);
+            Assert.True(response.Result.ResponseId == 1);
 
 
         }
         [Fact]
-        public void Exceptionvalidation()
+        public void ThrowsRecordsNotFoundException()
         {
-            var request = new updateEmployee() { Id=2,Name = "vishnu", Phonenumber = 7591211302, Email = "anu2611@gmail.com", City = "porur", Pincode = 600040, Salary = 15000 };
+            var request = new UpdateEmployee() { Id=2,Name = "vishnu", Phonenumber = 7591211302, Email = "anu2611@gmail.com", City = "porur", Pincode = 600040, Salary = 15000 };
             dbContextMock.Setup(x => x.SaveChangesAsync(CancellationToken.None)).Returns(() => Task.Run(() => { return 0; })).Verifiable();
             var response = Record.ExceptionAsync(async () => await handler.Handle(request, CancellationToken.None));
-            Assert.IsType<IdNotFoundException>(response.Result);
+            Assert.IsType<RecordsNotFoundException>(response.Result);
         }
 
 

@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
 
 {
-    public class updateEmployee : IRequest<ResponseModel>
+    public class UpdateEmployee : IRequest<EntityModel>
     {
-        
+
         public int Id { get; set; }
         public string Name { get; set; }
         public long Phonenumber { get; set; }
@@ -20,18 +20,18 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
 
     }
     //Handler for Update Employee
-    public class UpdateEmployeeHandler : IRequestHandler<updateEmployee, ResponseModel>
+    public class UpdateEmployeeHandler : IRequestHandler<UpdateEmployee, EntityModel>
     {
         private readonly EmployeeDbcontext employeeDbcontext;
         public UpdateEmployeeHandler(EmployeeDbcontext context)
         {
             employeeDbcontext = context;
         }
-        public async Task<ResponseModel> Handle(updateEmployee updateemp, CancellationToken cancellationToken)
+        public async Task<EntityModel> Handle(UpdateEmployee updateemp, CancellationToken cancellationToken)
         {
             var EmployeeDetails = await employeeDbcontext.Employeetable.Where(a => a.Id == updateemp.Id).FirstOrDefaultAsync();
-            ResponseModel responseModel = new ResponseModel();
-            //updates the value if the database is not empty
+            EntityModel responseModel = new EntityModel();
+            //updates the value if id is exist
             if (EmployeeDetails != null)
             {
                 EmployeeDetails.Name = updateemp.Name;
@@ -41,10 +41,10 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Update
                 EmployeeDetails.Pincode = updateemp.Pincode;
                 EmployeeDetails.Salary = updateemp.Salary;
                 employeeDbcontext.Employeetable.Update(EmployeeDetails);
-                responseModel.Id = await employeeDbcontext.SaveChangesAsync();
+                responseModel.ResponseId = await employeeDbcontext.SaveChangesAsync();
                 responseModel.Additionalinfo = "Employee details updated Successfully";
             }
-            //Throws Exception if the database is empty
+            //Throws Exception if id is not found
             else
             {
                 throw new RecordsNotFoundException();

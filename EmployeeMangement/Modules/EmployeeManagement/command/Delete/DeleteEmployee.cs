@@ -4,14 +4,14 @@ using MediatR;
 
 namespace EmployeeMangement.Modules.EmployeeManagement.command.Delete
 {
-    public class DeleteEmployee : IRequest<ResponseModel>
+    public class DeleteEmployee : IRequest<EntityModel>
     {
-        //Request for DeleteEmployee
+        
         public int Id { get; set; }
 
     }
-    //Handler For DeleteEmployee
-    public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployee, ResponseModel>
+    
+    public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployee, EntityModel>
     {
        
         private readonly EmployeeDbcontext employeeDbcontext;
@@ -19,25 +19,24 @@ namespace EmployeeMangement.Modules.EmployeeManagement.command.Delete
         {
             employeeDbcontext = context;
         }
-        public async Task<ResponseModel> Handle(DeleteEmployee request, CancellationToken cancellationToken)
+        public async Task<EntityModel> Handle(DeleteEmployee request, CancellationToken cancellationToken)
         {
             var EmployeeDetails = employeeDbcontext.Employeetable.Where(a => a.Id == request.Id).FirstOrDefault();
-            ResponseModel responseModel = new ResponseModel();
-            //delete the Record if the given id is Exist in database
+            EntityModel responseModel = new EntityModel();
+            //delete the Record if the given id Exists .
             if (EmployeeDetails != null)
             {
                 employeeDbcontext.Employeetable.Remove(EmployeeDetails);
-                await employeeDbcontext.SaveChangesAsync();
-                int res= EmployeeDetails.Id;
-                responseModel.Additionalinfo = "one row is affected" ;
-                
+                responseModel.ResponseId= await employeeDbcontext.SaveChangesAsync();
+                responseModel.Additionalinfo = "Employee record is deleted" ;
+                return responseModel;
             }
-            //Throws an Exception if the id is not found
+            //Throws an Exception if the Employee id is not found
             else
             {
                 throw new IdNotFoundException();
             }
-            return responseModel;
+            
         }
     }
 }

@@ -20,20 +20,8 @@ namespace EmployeeMangement.Modules.EmployeeManagement.Query.Get
             public async Task<List<EmployeeModel>> Handle(GetEmployee request, CancellationToken cancellationToken)
             {
                 var Employee = await employeeDbcontext.Employeetable.ToListAsync();
-                //Returns all Employee Details from Database 
-                if (Employee.Count!=0)
-                {
-                    return Employee;
-
-                }
-                //Throws an Exception if the id is not found
-                else
-                {
-                    throw new RecordsNotFoundException();
-
-                }
-
-                
+                //Returns all Employee Details. 
+                return Employee;
             }
         }
     }

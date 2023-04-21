@@ -1,8 +1,8 @@
 ﻿namespace EmployeeMangement.Models
 {
-    public class ResponseModel
+    public class EntityModel
     {
-        public int Id { get; set; }
+        public int ResponseId { get; set; }
         public string Additionalinfo { get; set; }
     }
 }
