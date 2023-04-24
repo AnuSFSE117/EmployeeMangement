@@ -119,7 +119,8 @@ namespace EmployeeMangement.Controllers
         /// </remarks>
         /// <param name="id"> id</param>  
         /// <returns>Employee details based on id </returns> 
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("GetEmployeebyId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
 
@@ -145,7 +146,7 @@ namespace EmployeeMangement.Controllers
         /// </remarks>
         /// <param name="id">id</param>  
         /// <returns>Employee details </returns> 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         
         public async Task<EntityModel> Delete(int id)
         {
