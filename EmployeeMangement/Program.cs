@@ -14,7 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers()
-    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+    .AddFluentValidation(fv => 
+    fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
 builder.Services.AddDbContext<EmployeeDbcontext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("getconn")));
