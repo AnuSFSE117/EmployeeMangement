@@ -124,7 +124,7 @@ namespace EmployeeMangement.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
 
 
-        public async Task<IActionResult>GetById(int id)
+        public async Task<IActionResult>SGetById(int id)
         {
             return Ok(await mediator.Send(new GetEmployeebyId{ Id = id }));
             

@@ -106,26 +106,43 @@ class program
             case 4:
                 Console.WriteLine("Enter Id:");
                 id=Convert.ToInt32(Console.ReadLine());
-                var data = new {Id=id};
-                var Jsonn = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-                var _contents = new StringContent(Jsonn, Encoding.UTF8, "application/json");
-                HttpResponseMessage Respon = await client.PutAsync("https://localhost:7262/api/Employee", _contents);
+                
+                HttpResponseMessage Respon = await client.GetAsync("https://localhost:7262/api/Employee/GetEmployeebyId?Id="+id);
                 if (Respon.IsSuccessStatusCode)
                 {
                     string output = await Respon.Content.ReadAsStringAsync();
-                    
+                    Console.WriteLine(output);
                 }
                 else
                 {
-                    Console.WriteLine($"Failed to update data: {Respon.StatusCode}");
+                    Console.WriteLine($"Failed to fetch data: {Respon.StatusCode}");
                    
                 }
                 Console.ReadLine();
                 break;
-               
-            
-           
 
+            case 5:
+                Console.WriteLine("Enter Id:");
+                id = Convert.ToInt32(Console.ReadLine());
+
+                HttpResponseMessage value = await client.DeleteAsync("https://localhost:7262/api/Employee?id=" + id);
+                if (value.IsSuccessStatusCode)
+                {
+                   
+                    Console.WriteLine(value);
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to delete data: {value.StatusCode}");
+
+                }
+                Console.ReadLine();
+                break;
+           
+           default:
+
+                Console.WriteLine("Invalid Choice");
+                break;
         }
 
 
