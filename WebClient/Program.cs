@@ -7,7 +7,8 @@ class program
 {
     static async Task Main(string[] args)
     {
-        var fileName = "C:\\Users\\Admin\\Downloads\\values.txt";
+       
+        
         HttpClient client = new HttpClient();
 
         Console.WriteLine("Enter ur choice");
@@ -20,7 +21,8 @@ class program
         switch (choice)
         {
             case 1:
-                Console.WriteLine("Enter the employee details:");
+
+                //Console.WriteLine("Enter the employee details:");
                 //Console.WriteLine("Enter Name:");
                 //String name=Console.ReadLine();
 
@@ -39,32 +41,37 @@ class program
                 //Console.WriteLine("Enter Salary");
                 //int salary = Convert.ToInt32(Console.ReadLine());
 
-                var lines = File.ReadAllLines(fileName);
-                var data = lines.Select(x => new
-                {
-                    Name = x.Split(",")[0],
-                    Phonenumber = x.Split(",")[1],
-                    Email = x.Split(",")[2],
-                    City = x.Split(",")[3],
-                    Pincode = x.Split(",")[4],
-                    Salary = x.Split(",")[5]
-                });
 
-                Console.WriteLine(data);
+                //var lines = File.ReadAllLines(fileName);
+                
+                Console.WriteLine("enter the file name:");
+                string file = Console.ReadLine();
+                var fileName = "C:\\Users\\Admin\\Downloads\\" + file;
+                string[] lines = File.ReadAllLines(fileName);
+                
+                var data =  new
+                {
+                    Name = lines[0],
+                    Phonenumber = lines[1],
+                    Email = lines[2],
+                    City = lines[3],
+                    Pincode = lines[4],
+                    Salary = lines[5]
+                };
+
                 var json = JsonConvert.SerializeObject(data);
-                Console.WriteLine(json);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage Response = await client.PostAsync("https://localhost:7262/api/Employee",content);
+                HttpResponseMessage Response = await client.PostAsync("https://localhost:7262/api/Employee", content);
                 if (Response.IsSuccessStatusCode)
                 {
                     string output = await Response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"data uploaded successfully");
+                    Console.WriteLine($"data uploaded successfully,{ output}");
                 }
                 else
                 {
                     Console.WriteLine($"Failed to upload data");
                 }
-                Console.ReadKey();
+                Console.ReadLine();
                 break;
 
             case 2:

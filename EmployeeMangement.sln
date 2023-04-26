@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeMangement", "Employ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagementTestProject", "EmployeeManagementTestProject\EmployeeManagementTestProject.csproj", "{B7F4B943-41F4-42DD-A4AD-145DB1E952CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient", "WebClient\WebClient.csproj", "{47D16763-E129-4426-B6AE-BD92F5F9ABA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient", "WebClient\WebClient.csproj", "{47D16763-E129-4426-B6AE-BD92F5F9ABA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadFiles", "UploadFiles\UploadFiles.csproj", "{325821EE-5B9D-4082-813F-C08A58128083}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{47D16763-E129-4426-B6AE-BD92F5F9ABA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47D16763-E129-4426-B6AE-BD92F5F9ABA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47D16763-E129-4426-B6AE-BD92F5F9ABA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{325821EE-5B9D-4082-813F-C08A58128083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{325821EE-5B9D-4082-813F-C08A58128083}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{325821EE-5B9D-4082-813F-C08A58128083}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{325821EE-5B9D-4082-813F-C08A58128083}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
